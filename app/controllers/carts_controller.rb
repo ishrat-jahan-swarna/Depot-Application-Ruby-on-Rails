@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: %i[ show edit update destroy ]
+  skip_before_action  :authorize, only: [:create, :update, :destroy]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
   # GET /carts or /carts.json
@@ -26,10 +27,10 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
-        format.html { redirect_to cart_url(@cart), notice: "Cart was successfully created." }
+        format.html { redirect_to @cart, notice: "Cart was successfully created." }
         format.json { render :show, status: :created, location: @cart }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new }
         format.json { render json: @cart.errors, status: :unprocessable_entity }
       end
     end
@@ -39,10 +40,10 @@ class CartsController < ApplicationController
   def update
     respond_to do |format|
       if @cart.update(cart_params)
-        format.html { redirect_to cart_url(@cart), notice: "Cart was successfully updated." }
+        format.html { redirect_to @cart, notice: "Cart was successfully updated." }
         format.json { render :show, status: :ok, location: @cart }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit }
         format.json { render json: @cart.errors, status: :unprocessable_entity }
       end
     end
