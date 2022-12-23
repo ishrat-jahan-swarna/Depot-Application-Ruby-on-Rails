@@ -22,4 +22,7 @@ Rails.application.routes.draw do
     root 'store#index', as: 'store_index', via: :all
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  #######
+  #FOR SENDING EMAILS
+  #http://localhost:3000/rails/conductor/action_mailbox/inbound_emails
 end
