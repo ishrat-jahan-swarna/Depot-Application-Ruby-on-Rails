@@ -18,7 +18,7 @@ class SupportMailboxTest < ActionMailbox::TestCase
     support_request = SupportRequest.last
     a = support_request.email.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) { |x| puts x } 
     puts a
-    assert_equal "chris@somewhere.net", a
+    assert_equal "chris@somewhere.net", JSON.parse(support_request.email)[0]
     assert_equal "Need help", support_request.subject
     assert_equal "I can't figure out how to check out!!", support_request.body
     assert_nil support_request.order
@@ -38,7 +38,7 @@ class SupportMailboxTest < ActionMailbox::TestCase
     support_request = SupportRequest.last
     a = support_request.email.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) { |x| puts x } 
     puts a
-    assert_equal recent_order.email, a
+    assert_equal recent_order.email, JSON.parse(support_request.email)[0]
     assert_equal "Need help", support_request.subject
     assert_equal "I can't figure out how to check out!!", support_request.body
     assert_equal recent_order, support_request.order
